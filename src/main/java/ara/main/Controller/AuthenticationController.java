@@ -3,7 +3,6 @@ package ara.main.Controller;
 import ara.main.Dto.AuthenticationRequest;
 import ara.main.Dto.AuthenticationResponse;
 import ara.main.Entity.PersonEntities.persons;
-import ara.main.Repositories.InventoryRepository.InventarioRepositorio;
 import ara.main.Service.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import java.util.List;
 public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
-    @Autowired
-    private InventarioRepositorio inventarioRepositorio;
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest authRequest){
         AuthenticationResponse jwtDto= authenticationService.login(authRequest);
@@ -30,8 +28,5 @@ public class AuthenticationController {
         return authenticationService.register(authRequest);
     }
 
-    @GetMapping()
-    public List<String> getInventario(){
-        return inventarioRepositorio.getBrandTableColumns();
-    }
+
 }

@@ -37,7 +37,7 @@ public class PersonDBConfig {
                                                                                 @Qualifier("personDataSource") DataSource personDataSource) {
         return builder
                 .dataSource(personDataSource)
-                .packages("ara.main.Entity")
+                .packages("ara.main.Entity.PersonEntities")
                 .build();
     }
 

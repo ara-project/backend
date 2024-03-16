@@ -35,8 +35,8 @@ public class InventoryDBConfig {
 
     @Primary
     @Bean(name = "inventoryEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean inventoryEntityManagerFactory(EntityManagerFactoryBuilder builder,
-                                                                              @Qualifier("inventoryDataSource") DataSource inventoryDataSource) {
+    public LocalContainerEntityManagerFactoryBean inventoryEntityManagerFactory(@org.jetbrains.annotations.NotNull EntityManagerFactoryBuilder builder,
+                                                                                @Qualifier("inventoryDataSource") DataSource inventoryDataSource) {
         return builder
                 .dataSource(inventoryDataSource)
                 .packages("ara.main.Entity.InventoryEntities")
@@ -50,3 +50,4 @@ public class InventoryDBConfig {
     }
 
 }
+
