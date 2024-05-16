@@ -65,6 +65,7 @@ public class PersonasService {
                     .password(request.getPassword())
                     .role(request.getRole())
                     .dni(request.getDni())
+                    .urlPhoto(request.getUrlPhoto())
                     .build();
             System.out.print(user);
             personRepository.save(user);
@@ -85,13 +86,14 @@ public class PersonasService {
     public ResponseEntity<PersonsDto> getId(String id){
         persons user= personRepository.findById(id).orElse(null);
         if (user==null){
-           return ResponseEntity.badRequest().body(new PersonsDto(null,null,null,null));
+           return ResponseEntity.badRequest().body(new PersonsDto(null,null,null,null,null));
         }else{
             var profile = PersonsDto.builder()
                     .identification(user.getIdentification())
                     .name(user.getName())
                     .lastname(user.getLastname())
                     .email(user.getEmail())
+                    .urlPhoto(user.getUrlPhoto())
                     .build();
             return ResponseEntity.ok(profile);
         }

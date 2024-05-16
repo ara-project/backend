@@ -15,4 +15,5 @@ public class PersonsDto {
     private String name;
     private String lastname;
     private String email;
+    private String urlPhoto;
 }

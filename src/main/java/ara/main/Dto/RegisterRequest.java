@@ -23,4 +23,5 @@ public class RegisterRequest {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String dni;
+    private String urlPhoto;
 }

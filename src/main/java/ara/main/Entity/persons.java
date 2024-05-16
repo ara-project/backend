@@ -29,6 +29,7 @@ public class persons implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String dni;
+    private String urlPhoto;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
