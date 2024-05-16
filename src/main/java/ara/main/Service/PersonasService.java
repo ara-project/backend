@@ -55,7 +55,7 @@ public class PersonasService {
                 return  ResponseEntity.badRequest().body("Contraseña Vacia");
             }*/
             var user = persons.builder()
-                    .identification(generatorId.generatorNumericId())
+                    .identification(request.getIdentification().isEmpty() ? generatorId.generatorNumericId() : request.getIdentification())
                     .name(request.getName())
                     .secondName(request.getSecondLastname())
                     .lastname(request.getLastname())
