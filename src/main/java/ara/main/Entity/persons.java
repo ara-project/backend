@@ -29,6 +29,7 @@ public class persons implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String dni;
+    @Column(name = "url_photo")
     private String urlPhoto;
 
     @Override
