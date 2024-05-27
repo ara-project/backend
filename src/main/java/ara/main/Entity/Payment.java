@@ -21,7 +21,20 @@ public class Payment {
     @Column(name = "realization_date")
     private Date realizationDate;
     private String identification;
-    private String mail;
     @Column(name = "id_orders")
     private String idOrder;
+    @Column(name = "card_number")
+    private String cardNumber;
+    @Column(name = "account_holder")
+    private String accountHolder;
+    @Column(name = "card_expiration")
+    private Date cardExpiration;
+    @Column(name = "security_code")
+    private String securityCode;
+    @Column(name = "payment_installments")
+    private int paymentInstallments;
+    @Column(name = "id_method")
+    private int idMethod;
+    @Column(name = "total_paid")
+    private Double totalPaid;
 }
