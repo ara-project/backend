@@ -1,7 +1,7 @@
 package ara.main.Repositories;
 
-import ara.main.Dto.ResetPasswordRequest;
-import ara.main.Entity.OrderDetails;
+import ara.main.Dto.FilterDateDto;
+import ara.main.Entity.Orders;
 import ara.main.Entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -76,6 +78,30 @@ public class JDBCQuerys {
             return jdbcTemplate.queryForObject(sql, new Object[]{username}, String.class);
         } catch (EmptyResultDataAccessException e) {
             return "El usuario no existe";
+        }
+    }
+
+    public List<Orders> getHistoricDates(Date primaryDate, Date secondaryDate){
+        try{
+            String sql = """
+                SELECT * FROM orders
+                WHERE id_orders IN (
+                    SELECT id_orders FROM payment
+                    WHERE realization_date BETWEEN ? AND ?
+                );
+                """;
+            List<Orders> ListOrder = jdbcTemplate.query(sql, new Object[] { primaryDate, secondaryDate } ,(resultSet, rowNum) -> {
+                Orders order = new Orders();
+                order.setIdOrders(resultSet.getString("id_orders"));
+                order.setTotalPrice(resultSet.getDouble("total_price"));
+                order.setStatePayment(resultSet.getInt("state_payment"));
+                order.setIdentification(resultSet.getString("identification"));
+
+                return order;
+            });
+            return ListOrder;
+        }catch (Exception e){
+            throw new RuntimeException(e.getCause());
         }
     }
 }
