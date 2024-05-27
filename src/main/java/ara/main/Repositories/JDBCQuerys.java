@@ -81,16 +81,17 @@ public class JDBCQuerys {
         }
     }
 
-    public List<Orders> getHistoricDates(Date primaryDate, Date secondaryDate){
+    public List<Orders> getHistoricDates(Date primaryDate, Date secondaryDate,String id){
         try{
             String sql = """
                 SELECT * FROM orders
                 WHERE id_orders IN (
                     SELECT id_orders FROM payment
                     WHERE realization_date BETWEEN ? AND ?
+                    AND identification = ?
                 );
                 """;
-            List<Orders> ListOrder = jdbcTemplate.query(sql, new Object[] { primaryDate, secondaryDate } ,(resultSet, rowNum) -> {
+            List<Orders> ListOrder = jdbcTemplate.query(sql, new Object[] { primaryDate, secondaryDate, id } ,(resultSet, rowNum) -> {
                 Orders order = new Orders();
                 order.setIdOrders(resultSet.getString("id_orders"));
                 order.setTotalPrice(resultSet.getDouble("total_price"));
@@ -102,6 +103,18 @@ public class JDBCQuerys {
             return ListOrder;
         }catch (Exception e){
             throw new RuntimeException(e.getCause());
+        }
+    }
+    public Double getTotalSpent(Date primaryDate, Date secondaryDate,String id){
+        try{
+            String sql= """
+                    SELECT sum(total_paid) FROM payment
+                    WHERE realization_date BETWEEN ? AND ?
+                    AND identification = ?
+                    """;
+            return jdbcTemplate.queryForObject(sql, new Object[]{primaryDate,secondaryDate,id}, Double.class);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
