@@ -17,11 +17,11 @@ public class Payment {
     @Id
     @Column(name = "payment_id")
     private String paymentId;
-    private String state;
+    private int state;
     @Column(name = "realization_date")
     private Date realizationDate;
     private String identification;
-    @Column(name = "id_orders")
+    @Column(name = "id_order")
     private String idOrder;
     @Column(name = "card_number")
     private String cardNumber;

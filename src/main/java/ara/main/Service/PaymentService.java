@@ -1,17 +1,18 @@
 package ara.main.Service;
 import ara.main.Entity.Payment;
 import ara.main.Repositories.PaymentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class PaymentService {
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
     public ResponseEntity<String> register(Payment payment){
         try {
             if (paymentRepository.existsById(payment.getPaymentId())){
-
                 return ResponseEntity.badRequest().body("Ya existe este pago");
             }
             paymentRepository.save(payment);

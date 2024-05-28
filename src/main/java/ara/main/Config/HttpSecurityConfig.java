@@ -42,7 +42,8 @@ public class HttpSecurityConfig {
             "/Oauth/**",
             "/auth/tokenValid*/*",
             "/Orders/**",
-            "/ordersdetails/**"};
+            "/ordersdetails/**",
+            "/Payment/**"};
     @Bean
     @Order(1)
     public SecurityFilterChain securityFilterOauth(HttpSecurity http) throws Exception {
