@@ -48,7 +48,7 @@ public class OrderDetailsService{
                     .build();
             orderDetailsRepository.saveOrderDetails(orderDetails);
         }
-        return ResponseEntity.ok("Guardado con exito");
+        return ResponseEntity.ok(idOrder);
     }
     public ResponseEntity<List<OrderDetails>> getByIdOrder(String order) {
         return ResponseEntity.ok(orderDetailsRepository.findOrderDetailsByIdOrder(order));

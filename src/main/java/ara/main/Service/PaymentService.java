@@ -36,7 +36,7 @@ public class PaymentService {
                 return ResponseEntity.badRequest().body("Ya existe este pago");
             }
             paymentRepository.save(pay);
-            return ResponseEntity.ok("El producto fue registrado con exito");
+            return ResponseEntity.ok(pay.getPaymentId());
         }
         catch(Exception e){
             return ResponseEntity.badRequest().body(e.toString());
