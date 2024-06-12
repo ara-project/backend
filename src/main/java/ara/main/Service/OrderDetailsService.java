@@ -6,7 +6,6 @@ import ara.main.Entity.OrderDetails;
 import ara.main.Entity.Orders;
 import ara.main.Repositories.OrderDetailsRepository;
 import ara.main.Repositories.OrdersRepository;
-import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class OrderDetailsService{
         }
         return ResponseEntity.ok("Guardado con exito");
     }
-    public ResponseEntity<List<OrderDetails>> getAll() {
-        return ResponseEntity.ok(orderDetailsRepository.findAllOrdersDetails());
+    public ResponseEntity<List<OrderDetails>> getByIdOrder(String order) {
+        return ResponseEntity.ok(orderDetailsRepository.findOrderDetailsByIdOrder(order));
     }
 }

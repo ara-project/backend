@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Payment {
     @Id
     @Column(name = "payment_id")
@@ -28,7 +30,7 @@ public class Payment {
     @Column(name = "account_holder")
     private String accountHolder;
     @Column(name = "card_expiration")
-    private Date cardExpiration;
+    private String cardExpiration;
     @Column(name = "security_code")
     private String securityCode;
     @Column(name = "payment_installments")

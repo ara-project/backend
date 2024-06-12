@@ -19,4 +19,8 @@ public class OrdersDetailsController {
     public ResponseEntity<String> saveOrderDetails(@RequestBody OrderDto orderDto){
         return orderDetailsService.register(orderDto);
     }
+    @GetMapping("/findAll/{idOrder}")
+    public ResponseEntity<List<OrderDetails>> getOrdersDetail(@PathVariable String idOrder){
+        return orderDetailsService.getByIdOrder(idOrder);
+    }
 }

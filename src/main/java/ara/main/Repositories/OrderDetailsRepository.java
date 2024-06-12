@@ -2,7 +2,6 @@ package ara.main.Repositories;
 
 import ara.main.Entity.OrderDetails;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -49,12 +48,13 @@ public class OrderDetailsRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public List<OrderDetails> findAllOrdersDetails(){
+    public List<OrderDetails> findOrderDetailsByIdOrder(String order){
         try{
-            String Sql="SELECT * FROM order_details";
-            List<OrderDetails> orders= jdbcTemplate.query(Sql,(resultSet,rowNum)->{
+            String Sql="SELECT * FROM order_details WHERE id_order = ?";
+            List<OrderDetails> orders= jdbcTemplate.query(Sql,new Object[] { order },(resultSet,rowNum)->{
                 OrderDetails orderDetails= new OrderDetails();
-                orderDetails.setIdProduct(BigInteger.valueOf(resultSet.getInt("id_product")));
+                orderDetails.setIdOrder(resultSet.getString("id_order"));
+                orderDetails.setIdProduct(BigInteger.valueOf(resultSet.getLong("id_product")));
                 orderDetails.setAmount(resultSet.getInt("amount"));
                 orderDetails.setPriceTaxes(resultSet.getDouble("price_taxes"));
                 return orderDetails;
