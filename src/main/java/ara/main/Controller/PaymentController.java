@@ -2,6 +2,7 @@ package ara.main.Controller;
 
 import ara.main.Dto.FilterDateDto;
 import ara.main.Dto.OrderDto;
+import ara.main.Dto.PaymentDto;
 import ara.main.Entity.Orders;
 import ara.main.Entity.Payment;
 import ara.main.Repositories.JDBCQuerys;
@@ -23,7 +24,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final StatsService statsService;
     @PostMapping("/save")
-    public ResponseEntity<String> saveOrderDetails(@RequestBody Payment payment){
+    public ResponseEntity<String> saveOrderDetails(@RequestBody PaymentDto payment){
         return paymentService.register(payment);
     }
     @GetMapping("/filter/{primaryDateStr}/{secondaryDateStr}/{token}")
