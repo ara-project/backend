@@ -4,10 +4,7 @@ import ara.main.Entity.Orders;
 import ara.main.Service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,9 @@ public class OrdersController {
     @PutMapping("/update")
     public ResponseEntity<String> updateOrder(Orders orders){
         return ordersService.modify(orders);
+    }
+    @GetMapping("/getOrder")
+    public ResponseEntity<List<Orders>> getAll(@RequestParam String token){
+        return ordersService.getAllByIdUser(token);
     }
 }

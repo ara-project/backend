@@ -16,6 +16,8 @@ public class OrdersService implements CRUDInterface<Orders>{
     private OrdersRepository ordersRepository;
     @Autowired
     private GeneratorId generatorId;
+    @Autowired
+    private JwtService jwtService;
     @Override
     public ResponseEntity<String> register(Orders order) {
         if (!ordersRepository.existsById(order.getIdOrders())){
@@ -23,7 +25,6 @@ public class OrdersService implements CRUDInterface<Orders>{
         }
         return ResponseEntity.badRequest().body("Ya existe una orden asociada a ese Id");
     }
-
     @Override
     public ResponseEntity<String> modify(Orders order) {
         if (ordersRepository.existsById(order.getIdOrders())){
@@ -31,14 +32,13 @@ public class OrdersService implements CRUDInterface<Orders>{
         }
         return ResponseEntity.badRequest().body("No existe una orden asociada a ese Id");
     }
-
     @Override
     public ResponseEntity<List<Orders>> getAll() {
         return ResponseEntity.ok(ordersRepository.findAll());
     }
-
-    protected Optional<Orders> getOrderById(String idOrder){
-        return ordersRepository.findById(idOrder);
+    public ResponseEntity<List<Orders>> getAllByIdUser(String token) {
+        String idUser= jwtService.extractID(token);
+        return ResponseEntity.ok(ordersRepository.findAllByIdentification(idUser));
     }
     protected String saveOrder(Orders order){
         String Id=generatorId.IdGenerator();
