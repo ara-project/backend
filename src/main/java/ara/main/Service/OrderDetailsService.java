@@ -2,10 +2,13 @@ package ara.main.Service;
 
 import ara.main.Config.GeneratorId;
 import ara.main.Dto.OrderDto;
+import ara.main.Dto.ShoppingDetails;
 import ara.main.Entity.OrderDetails;
 import ara.main.Entity.Orders;
+import ara.main.Entity.Product;
 import ara.main.Repositories.OrderDetailsRepository;
 import ara.main.Repositories.OrdersRepository;
+import ara.main.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class OrderDetailsService{
     private GeneratorId generatorId;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private ProductRepository productRepository;
     public ResponseEntity<String> register(OrderDto orderDto){
         String idOrder= generatorId.IdGenerator();
         if (!ordersRepository.existsById(idOrder)){
@@ -50,7 +55,21 @@ public class OrderDetailsService{
         }
         return ResponseEntity.ok(idOrder);
     }
-    public ResponseEntity<List<OrderDetails>> getByIdOrder(String order) {
-        return ResponseEntity.ok(orderDetailsRepository.findOrderDetailsByIdOrder(order));
+    public ResponseEntity<List<ShoppingDetails>> getByIdOrder(String order) {
+        List<ShoppingDetails> list = new java.util.ArrayList<>(List.of());
+        for (var item:orderDetailsRepository.findOrderDetailsByIdOrder(order)){
+            Product product = productRepository.findById(item.getIdProduct()).orElse(null);
+            if (product!=null){
+                var response= ShoppingDetails.builder()
+                        .priceTaxes(item.getPriceTaxes())
+                        .img(product.getImg_src())
+                        .nameProduct(product.getName())
+                        .build();
+                list.add(response);
+            }else{
+                break;
+            }
+        }
+        return ResponseEntity.ok(list);
     }
 }
