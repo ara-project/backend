@@ -2,6 +2,7 @@ package ara.main.Service;
 import ara.main.Config.GeneratorId;
 import ara.main.Dto.PaymentDto;
 import ara.main.Entity.Payment;
+import ara.main.Repositories.JDBCQuerys;
 import ara.main.Repositories.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
+    private final JDBCQuerys repository;
     private final GeneratorId generatorId;
     private final JwtService jwtService;
     public ResponseEntity<String> register(PaymentDto payment){
@@ -27,7 +29,7 @@ public class PaymentService {
                     .cardNumber(payment.getCardNumber())
                     .accountHolder(payment.getAccountHolder())
                     .cardExpiration(payment.getCardExpiration())
-                    .securityCode(payment.getCardExpiration())
+                    .securityCode(payment.getSecurityCode())
                     .paymentInstallments(payment.getPaymentInstallments())
                     .idMethod(payment.getIdMethod())
                     .totalPaid(payment.getTotalPaid())
@@ -49,5 +51,13 @@ public class PaymentService {
             return ResponseEntity.badRequest().body(null);
         }
 
+    }
+    public ResponseEntity<String> completePay(String idPayment){
+        int response= repository.completePayment(idPayment);
+        if (response==1){
+            return ResponseEntity.ok("Correcto");
+        }else{
+            return ResponseEntity.badRequest().body("Incorrecto");
+        }
     }
 }
