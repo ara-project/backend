@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -50,5 +51,9 @@ public class PersonasController {
     @PutMapping("/addExpense")
     public ResponseEntity<String> addExpense(@RequestBody MonthlyExpenses request){
         return monthlyExpensesService.createBalance(request);
+    }
+    @GetMapping("/addExpense/{token}")
+    public ResponseEntity<balanceResponse> addExpense(@PathVariable String token){
+        return monthlyExpensesService.getBalance(token);
     }
 }
