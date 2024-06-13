@@ -1,6 +1,7 @@
 package ara.main.Controller;
 
 import ara.main.Dto.OrderDto;
+import ara.main.Dto.ShoppingDetails;
 import ara.main.Entity.OrderDetails;
 import ara.main.Service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class OrdersDetailsController {
         return orderDetailsService.register(orderDto);
     }
     @GetMapping("/findAll/{idOrder}")
-    public ResponseEntity<List<OrderDetails>> getOrdersDetail(@PathVariable String idOrder){
+    public ResponseEntity<List<ShoppingDetails>> getOrdersDetail(@PathVariable String idOrder){
         return orderDetailsService.getByIdOrder(idOrder);
     }
 }

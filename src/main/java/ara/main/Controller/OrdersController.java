@@ -21,8 +21,8 @@ public class OrdersController {
     public ResponseEntity<String> updateOrder(Orders orders){
         return ordersService.modify(orders);
     }
-    @GetMapping("/getOrder")
-    public ResponseEntity<List<Orders>> getAll(@RequestParam String token){
+    @GetMapping("/getOrder/{token}")
+    public ResponseEntity<List<Orders>> getAll(@PathVariable String token){
         return ordersService.getAllByIdUser(token);
     }
 }
