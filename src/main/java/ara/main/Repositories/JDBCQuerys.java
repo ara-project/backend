@@ -65,9 +65,7 @@ public class JDBCQuerys {
                     SET password=?
                     WHERE identification = ?
                     """;
-            int value=jdbcTemplate.update(sql,confirmPassword,identification);
-            System.out.println(value);
-            return value;
+            return jdbcTemplate.update(sql,confirmPassword,identification);
         }catch (Exception e){
             throw new RuntimeException("Hubo en error en la llamada al metodo");
         }
@@ -114,6 +112,14 @@ public class JDBCQuerys {
                     """;
             return jdbcTemplate.queryForObject(sql, new Object[]{primaryDate,secondaryDate,id}, Double.class);
         }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public int completePayment(String idPayment){
+        try {
+            String sql="UPDATE payment SET state=4 WHERE payment_id = ?";
+            return jdbcTemplate.update(sql,idPayment);
+        }catch(Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }

@@ -36,4 +36,8 @@ public class PaymentController {
     public ResponseEntity<Double> getTotalSpend(@PathVariable String token){
         return statsService.getTotalSpend(token);
     }
+    @PutMapping("/Completepay/{id}")
+    public ResponseEntity<String> putCompletePay(@PathVariable String id){
+        return paymentService.completePay(id);
+    }
 }
