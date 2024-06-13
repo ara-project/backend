@@ -1,8 +1,10 @@
 package ara.main.Controller;
 
 import ara.main.Dto.*;
+import ara.main.Entity.MonthlyExpenses;
 import ara.main.Entity.persons;
 import ara.main.Service.JwtService;
+import ara.main.Service.MonthlyExpensesService;
 import ara.main.Service.PersonasService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class PersonasController {
     private PersonasService personasService;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private MonthlyExpensesService monthlyExpensesService;
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest authRequest){
         return personasService.register(authRequest);
@@ -42,5 +46,9 @@ public class PersonasController {
     @PutMapping("/resetPassword")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request){
         return personasService.resetPassword(request);
+    }
+    @PutMapping("/addExpense")
+    public ResponseEntity<String> addExpense(@RequestBody MonthlyExpenses request){
+        return monthlyExpensesService.createBalance(request);
     }
 }

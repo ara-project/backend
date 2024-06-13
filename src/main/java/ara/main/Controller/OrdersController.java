@@ -1,5 +1,6 @@
 package ara.main.Controller;
 
+import ara.main.Dto.OrderResponse;
 import ara.main.Entity.Orders;
 import ara.main.Service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class OrdersController {
         return ordersService.modify(orders);
     }
     @GetMapping("/getOrder/{token}")
-    public ResponseEntity<List<Orders>> getAll(@PathVariable String token){
+    public ResponseEntity<List<OrderResponse>> getAll(@PathVariable String token){
         return ordersService.getAllByIdUser(token);
     }
 }

@@ -15,11 +15,12 @@ public class MonthlyExpensesService {
 
     public ResponseEntity<String> createBalance(MonthlyExpenses request){
         String idByToken=jwtService.extractID(request.getIdentification());
-        if (monthlyExpensesRepository.existsById(idByToken)){
-            MonthlyExpenses balance=monthlyExpensesRepository.findByIdentification(idByToken).orElse(null);
-            assert balance != null;
+        MonthlyExpenses balance=monthlyExpensesRepository.findByIdentification(idByToken).orElse(null);
+        assert balance != null;
+        if (monthlyExpensesRepository.existsById(balance.getIdBalance())){
             request.setIdBalance(balance.getIdBalance());
             request.setIdentification(idByToken);
+            request.setBalance(balance.getBalance()+ request.getBalance());
             monthlyExpensesRepository.save(request);
             return ResponseEntity.ok("Guardado Correctamente");
         }else{
