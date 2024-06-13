@@ -1,6 +1,7 @@
 package ara.main.Repositories;
 
 import ara.main.Dto.FilterDateDto;
+import ara.main.Dto.balanceInitResponse;
 import ara.main.Entity.Orders;
 import ara.main.Entity.Product;
 import lombok.RequiredArgsConstructor;
@@ -120,6 +121,28 @@ public class JDBCQuerys {
             String sql="UPDATE payment SET state=4 WHERE payment_id = ?";
             return jdbcTemplate.update(sql,idPayment);
         }catch(Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public List<balanceInitResponse> getPaid(String idUser){
+        try{
+            String sql= """
+                    SELECT realization_date, total_paid
+                    FROM payment
+                    WHERE identification=?
+                    ORDER BY realization_date DESC
+                    LIMIT 3;
+                    """;
+            List<balanceInitResponse> ListOrder = jdbcTemplate.query(sql, new Object[] { idUser } ,(resultSet, rowNum) -> {
+                balanceInitResponse order = balanceInitResponse.builder()
+                                .datePay(resultSet.getDate("realization_date"))
+                                .totalPaid(resultSet.getDouble("total_paid"))
+                                .build();
+
+                return order;
+            });
+            return ListOrder;
+        }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }
